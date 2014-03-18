@@ -1,5 +1,4 @@
-WordPress Page Templater by Harri Bell-Thomas
-=============================================
+<h2>WordPress Page Templater by Harri Bell-Thomas</h2>
 
 A useful bit of code from <a href="https://github.com/HarriBellThomas">Harri Bell-Thomas</a> you can use to dynamically create WordPress Page Templates with PHP.
 
