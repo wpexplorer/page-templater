@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Good To Be Bad Template
+Plugin Name: Page Template Plugin : 'Good To Be Bad'
 Plugin URI: http://hbt.io/
-Version: 1.0.0
+Version: 1.0.1
 Author: Harri Bell-Thomas
 Author URI: http://hbt.io/
 */
@@ -89,7 +89,7 @@ class PageTemplater {
 
                 // Retrieve the cache list. 
 				// If it doesn't exist, or it's empty prepare an array
-                $templates = wp_cache_get( $cache_key, 'themes' );
+				$templates = wp_get_theme()->get_page_templates();
                 if ( empty( $templates ) ) {
                         $templates = array();
                 } 
