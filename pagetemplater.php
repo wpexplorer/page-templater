@@ -9,11 +9,6 @@ Author URI: http://hbt.io/
 
 class PageTemplater {
 
-		/**
-         * A Unique Identifier
-         */
-		 protected $plugin_slug;
-
         /**
          * A reference to an instance of this class.
          */
