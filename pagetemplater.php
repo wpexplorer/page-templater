@@ -41,7 +41,7 @@ class PageTemplater {
 
 
 		// Add a filter to the attributes metabox to inject template into the cache.
-        	if ( version_compare( floatval($GLOBALS['wp_version']), '4.7', '<' ) ) { // 4.6 and older
+        	if ( version_compare( floatval( get_bloginfo( 'version' ) ), '4.7', '<' ) ) { // 4.6 and older
             		add_filter(
                 		'page_attributes_dropdown_pages_args',
                 		array( $this, 'register_project_templates' )
