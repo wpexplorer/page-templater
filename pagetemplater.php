@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: Page Template Plugin : 'Good To Be Bad'
-Plugin URI: http://hbt.io/
-Version: 1.0.1
-Author: Harri Bell-Thomas
-Author URI: http://hbt.io/
+Plugin URI: http://www.wpexplorer.com/wordpress-page-templates-plugin/
+Version: 1.1.0
+Author: WPExplorer
+Author URI: http://www.wpexplorer.com/
 */
 
 class PageTemplater {
@@ -41,17 +41,22 @@ class PageTemplater {
 
 
 		// Add a filter to the attributes metabox to inject template into the cache.
-        	if ( version_compare( floatval( get_bloginfo( 'version' ) ), '4.7', '<' ) ) { // 4.6 and older
-            		add_filter(
-                		'page_attributes_dropdown_pages_args',
-                		array( $this, 'register_project_templates' )
-            		);
-        	} else { // Add a filter to the wp 4.7 version attributes metabox
-            		add_filter(
-                		'theme_page_templates', array( $this, 'add_new_template' )
-            		);
-        	}
+		if ( version_compare( floatval( get_bloginfo( 'version' ) ), '4.7', '<' ) ) {
 
+			// 4.6 and older
+			add_filter(
+				'page_attributes_dropdown_pages_args',
+				array( $this, 'register_project_templates' )
+			);
+
+		} else {
+
+			// Add a filter to the wp 4.7 version attributes metabox
+			add_filter(
+				'theme_page_templates', array( $this, 'add_new_template' )
+			);
+
+		}
 
 		// Add a filter to the save post to inject out template into the page cache
 		add_filter(
@@ -76,20 +81,18 @@ class PageTemplater {
 	} 
 
 	/**
-     	 * Adds our template to the page dropdown for v4.7+
-     	 *
-     	 */
-    	public function add_new_template( $posts_templates ) {
-        	$posts_templates = array_merge( $posts_templates, $this->templates );
-        	return $posts_templates;
-    	}
+	 * Adds our template to the page dropdown for v4.7+
+	 *
+	 */
+	public function add_new_template( $posts_templates ) {
+		$posts_templates = array_merge( $posts_templates, $this->templates );
+		return $posts_templates;
+	}
 
 	/**
 	 * Adds our template to the pages cache in order to trick WordPress
 	 * into thinking the template file exists where it doens't really exist.
-	 *
 	 */
-
 	public function register_project_templates( $atts ) {
 
 		// Create the key used for the themes cache
@@ -131,13 +134,13 @@ class PageTemplater {
 		}
 
 		// Return default template if we don't have a custom one defined
-		if ( !isset( $this->templates[get_post_meta( 
+		if ( ! isset( $this->templates[get_post_meta( 
 			$post->ID, '_wp_page_template', true 
 		)] ) ) {
 			return $template;
 		} 
 
-		$file = plugin_dir_path(__FILE__). get_post_meta( 
+		$file = plugin_dir_path( __FILE__ ). get_post_meta( 
 			$post->ID, '_wp_page_template', true
 		);
 
