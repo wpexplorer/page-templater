@@ -124,6 +124,10 @@ class PageTemplater {
 	 * Checks if the template is assigned to the page
 	 */
 	public function view_project_template( $template ) {
+		// Return the search template if we're searching (instead of the template for the first result)
+		if ( is_search() ) {
+			return $template;
+		}
 		
 		// Get global post
 		global $post;
