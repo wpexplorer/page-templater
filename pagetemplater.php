@@ -144,8 +144,8 @@ class PageTemplater {
 			return $template;
 		}
 
-		// allows filtering of file path
-		$filepath = apply_filters( 'urda_templater_dir', plugin_dir_path( __FILE__ ) );
+		// Allows filtering of file path
+		$filepath = apply_filters( 'page_templater_plugin_dir_path', plugin_dir_path( __FILE__ ) );
 
 		$file =  $filepath . get_post_meta(
 			$post->ID, '_wp_page_template', true
