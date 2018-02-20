@@ -20,17 +20,17 @@ class PageTemplater {
 	protected $templates;
 
 	/**
-	 * Returns an instance of this class. 
+	 * Returns an instance of this class.
 	 */
 	public static function get_instance() {
 
 		if ( null == self::$instance ) {
 			self::$instance = new PageTemplater();
-		} 
+		}
 
 		return self::$instance;
 
-	} 
+	}
 
 	/**
 	 * Initializes the plugin by setting filters and administration functions.
@@ -60,16 +60,16 @@ class PageTemplater {
 
 		// Add a filter to the save post to inject out template into the page cache
 		add_filter(
-			'wp_insert_post_data', 
-			array( $this, 'register_project_templates' ) 
+			'wp_insert_post_data',
+			array( $this, 'register_project_templates' )
 		);
 
 
-		// Add a filter to the template include to determine if the page has our 
+		// Add a filter to the template include to determine if the page has our
 		// template assigned and return it's path
 		add_filter(
-			'template_include', 
-			array( $this, 'view_project_template') 
+			'template_include',
+			array( $this, 'view_project_template')
 		);
 
 
@@ -77,8 +77,8 @@ class PageTemplater {
 		$this->templates = array(
 			'goodtobebad-template.php' => 'It\'s Good to Be Bad',
 		);
-			
-	} 
+
+	}
 
 	/**
 	 * Adds our template to the page dropdown for v4.7+
@@ -98,12 +98,12 @@ class PageTemplater {
 		// Create the key used for the themes cache
 		$cache_key = 'page_templates-' . md5( get_theme_root() . '/' . get_stylesheet() );
 
-		// Retrieve the cache list. 
+		// Retrieve the cache list.
 		// If it doesn't exist, or it's empty prepare an array
 		$templates = wp_get_theme()->get_page_templates();
 		if ( empty( $templates ) ) {
 			$templates = array();
-		} 
+		}
 
 		// New cache, therefore remove the old one
 		wp_cache_delete( $cache_key , 'themes');
@@ -118,7 +118,7 @@ class PageTemplater {
 
 		return $atts;
 
-	} 
+	}
 
 	/**
 	 * Checks if the template is assigned to the page
@@ -128,7 +128,7 @@ class PageTemplater {
 		if ( is_search() ) {
 			return $template;
 		}
-		
+
 		// Get global post
 		global $post;
 
@@ -138,13 +138,16 @@ class PageTemplater {
 		}
 
 		// Return default template if we don't have a custom one defined
-		if ( ! isset( $this->templates[get_post_meta( 
-			$post->ID, '_wp_page_template', true 
+		if ( ! isset( $this->templates[get_post_meta(
+			$post->ID, '_wp_page_template', true
 		)] ) ) {
 			return $template;
-		} 
+		}
 
-		$file = plugin_dir_path( __FILE__ ). get_post_meta( 
+		// allows filtering of file path
+		$filepath = apply_filters( 'urda_templater_dir', plugin_dir_path( __FILE__ ) );
+
+		$file =  $filepath . get_post_meta(
 			$post->ID, '_wp_page_template', true
 		);
 
@@ -160,5 +163,5 @@ class PageTemplater {
 
 	}
 
-} 
+}
 add_action( 'plugins_loaded', array( 'PageTemplater', 'get_instance' ) );
